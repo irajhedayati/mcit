@@ -1,0 +1,40 @@
+> git clone .....
+> git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   README.md
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+> git checkout README.md
+> git status
+# On branch master
+nothing to commit, working directory clean
+> ... EDIT FILE AGAIN ...
+> git add README.md
+> git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   README.md
+#
+> git commit -m "First commit"
+1 file changed, 4 insertions(+), 1 deletion(-)
+> git log
+commit 9dd72776c3ec7039abc7b349ed8a184e2ddfa7bd
+Author: root <root@localhost.localdomain>
+Date:   Tue Jan 22 18:39:30 2019 -0500
+
+    First commit
+
+commit 1c641d1d72e87ccffbd4ebf380d944b3ef8eb0e4
+Author: Iraj Hedayati <iraj.hedayati@gmail.com>
+Date:   Tue Jan 22 18:08:29 2019 -0500
+
+    Initial commit
+
+> git push
