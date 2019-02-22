@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>3</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/root/opt/data/namenode</value>
+    </property>
+    <property>
+        <name>dfs.blocksize</name>
+        <value>67108864</value>
+    </property>
+    <property>
+        <name>dfs.namenode.handler.count</name>
+        <value>4</value>
+    </property>
+</configuration>

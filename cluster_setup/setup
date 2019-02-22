@@ -1,0 +1,46 @@
+IP		hostname
+172.16.129.53	node1
+172.16.129.54	node4
+172.16.129.55	node2
+172.16.129.56	node3
+
+mkdir ~/opt
+cd ~/opt
+wget http://httpd-mirror.sergal.org/apache/hadoop/common/hadoop-2.7.7/hadoop-2.7.7.tar.gz
+tar -xf hadoop-2.7.7.tar.gz
+mv hadoop-2.7.7 hadoop
+
+scp core-site.xml node1:/root/opt/hadoop/etc/hadoop/
+scp core-site.xml node2:/root/opt/hadoop/etc/hadoop/
+scp core-site.xml node3:/root/opt/hadoop/etc/hadoop/
+scp core-site.xml node4:/root/opt/hadoop/etc/hadoop/
+
+scp hdfs-site.xml node1:/root/opt/hadoop/etc/hadoop/
+scp hdfs-site.xml node2:/root/opt/hadoop/etc/hadoop/
+scp hdfs-site.xml node3:/root/opt/hadoop/etc/hadoop/
+scp hdfs-site.xml node4:/root/opt/hadoop/etc/hadoop/
+
+scp yarn-site.xml node1:/root/opt/hadoop/etc/hadoop/
+scp yarn-site.xml node2:/root/opt/hadoop/etc/hadoop/
+scp yarn-site.xml node3:/root/opt/hadoop/etc/hadoop/
+scp yarn-site.xml node4:/root/opt/hadoop/etc/hadoop/
+
+scp .bashrc node1:/root/
+scp .bashrc node2:/root/
+scp .bashrc node3:/root/
+scp .bashrc node4:/root/
+
+source ~/.bashrc
+
+
+# Only node1
+hadoop namenode -format mcit
+hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start namenode
+start-dfs.sh
+yarn-daemons.sh --config $HADOOP_CONF_DIR start nodemanager
+yarn-daemons.sh --config $HADOOP_CONF_DIR start nodemanager
+start-yarn.sh
+
+# Only node2, node3, node4
+hadoop-daemons.sh --config $HADOOP_CONF_DIR --script hdfs start datanode
+yarn-daemons.sh --config $HADOOP_CONF_DIR start nodemanager
