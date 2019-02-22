@@ -1,0 +1,93 @@
+# Practice file encoding in Hive
+
+## HDFS home directory
+
+Make sure a home directory exists under your name and you put samle files from STM on HDFS under your directory.
+
+```bash
+hadoop fs -ls 
+hadoop fs -mkdir /user/root
+hadoop fs -mkdir stm_gtfs
+hadoop fs -mkdri stm_gtfs/stop_times
+hadoop fs -put stop_times.txt stm_gtfs/stop_times
+```
+
+## Start client
+
+Run **beeline** to connet to the Hive server:
+
+```bash
+beeline -u jdbc:hive2://node1:10000 --showDbInPrompt
+```
+
+## CSV file encoding
+
+The file we put on HDFS is in CSV format. Create an external table pointing to the directory on HDFS to run SQL queries.
+
+```sql
+CREATE EXTERNAL TABLE ext_stop_times (
+ trip_id STRING,
+ arrival_time STRING,
+ departure_time STRING,
+ stop_id BIGINT,
+ stop_sequence SMALLINT
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/user/root/stm_gtfs/stop_times';
+
+SELECT * FROM ext_stop_times LIMIT 10
+```
+
+Create another table (managed) by importing data from external file
+
+```sql
+CREATE TABLE stop_times_txt 
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE
+AS SELECT * FROM ext_stop_times;
+```
+
+
+hive (stm_gtfs)> dfs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_txt;
+-rwxrwxr-x   1 root supergroup  248.1 M 2018-09-01 23:53 /user/hive/warehouse/stm_gtfs.db/stop_times_txt/000000_0
+
+-- Why only one file?
+
+hive (stm_gtfs)> dfs -tail /user/hive/warehouse/stm_gtfs.db/stop_times_txt/000000_0;
+5:43:57,05:43:57,46,10
+18S_18S_F2_2_0,05:45:13,05:45:13,36,11
+18S_18S_F2_2_0,05:46:44,05:46:44,17,12
+...
+
+-- Output compression
+hive (stm_gtfs)> set mapred.map.output.compression.codec=org.apache.hadoop.io.compress.GZipCodec;
+hive (stm_gtfs)> set hive.exec.compress.output=true;
+
+CREATE TABLE stop_times_txt_gz
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
+AS SELECT * FROM stop_times_txt;
+
+hive (stm_gtfs)> dfs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_txt_gz;
+-rwxrwxr-x   1 root supergroup     41.3 M 2018-09-02 00:43 /user/hive/warehouse/stm_gtfs.db/stop_times_txt_gz/000000_0.deflate
+
+-- Sequence file
+
+CREATE TABLE stop_times_seq
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS SEQUENCEFILE
+AS SELECT * FROM stop_times_txt;
+
+hive (stm_gtfs)> dfs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_seq;
+-rwxrwxr-x   1 root supergroup    311.2 M 2018-09-02 00:02 /user/hive/warehouse/stm_gtfs.db/stop_times_seq/000000_0
+
+hive (stm_gtfs)> dfs -tail /user/hive/warehouse/stm_gtfs.db/stop_times_seq/000000_0;
+:10,13,16+&18S_18S_F2_2_0,05:52:13,05:52:13,12,17+&18S_18S_F2_2_0,05:53:44,05:53:44,11,18+&18S_18S_F2_2_0,...
+
+-- Sequence file compressed
+CREATE TABLE stop_times_seq_gz
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
+AS SELECT * FROM stop_times_txt;
+
+hive (stm_gtfs)> dfs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_seq_gz;
+-rwxrwxr-x   1 root supergroup     41.3 M 2018-09-02 01:36 /user/hive/warehouse/stm_gtfs.db/stop_times_seq_gz/000000_0.deflate
+
