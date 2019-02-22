@@ -9,7 +9,7 @@ hadoop fs -ls /user
 hadoop fs -mkdir /user/your_name
 hadoop fs -mkdir /user/your_name/stm_gtfs
 hadoop fs -mkdri /user/your_name/stm_gtfs/stop_times
-hadoop fs -put stop_times.txt stm_gtfs/stop_times
+hadoop fs -put stop_times.txt /user/your_name/stm_gtfs/stop_times
 ```
 
 Question: how could we do the commands from 2 to 4 in one line?
