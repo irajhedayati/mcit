@@ -5,12 +5,15 @@
 Make sure a home directory exists under your name and you put samle files from STM on HDFS under your directory.
 
 ```bash
-hadoop fs -ls 
-hadoop fs -mkdir /user/root
-hadoop fs -mkdir stm_gtfs
-hadoop fs -mkdri stm_gtfs/stop_times
+hadoop fs -ls /user
+hadoop fs -mkdir /user/your_name
+hadoop fs -mkdir /user/your_name/stm_gtfs
+hadoop fs -mkdri /user/your_name/stm_gtfs/stop_times
 hadoop fs -put stop_times.txt stm_gtfs/stop_times
 ```
+
+Question: how could we do the commands from 2 to 4 in one line?
+
 
 ## Start client
 
