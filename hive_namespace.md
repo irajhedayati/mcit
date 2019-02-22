@@ -80,35 +80,42 @@ hadoop fs -tail /user/hive/warehouse/stm_gtfs.db/stop_times_txt/000000_0;
 
 ## Output compression
 
-```
+
+Enable GZip encoding in Hive:
+
+```bash
 jdbc:hive2://node1:10000 (default)> set mapred.map.output.compression.codec=org.apache.hadoop.io.compress.GZipCodec;
 jdbc:hive2://node1:10000 (default)> set hive.exec.compress.output=true;
 ```
 
-``
+```sql
 CREATE TABLE stop_times_txt_gz
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
 AS SELECT * FROM stop_times_txt;
-``
-
-```bash
-hadoop dfs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_txt_gz;
--rwxrwxr-x   1 root supergroup     41.3 M 2018-09-02 00:43 /user/hive/warehouse/stm_gtfs.db/stop_times_txt_gz/000000_0.deflate
 ```
 
--- Sequence file
+```bash
+hadoop dfs -ls -h /user/hive/warehouse/your_name.db/stop_times_txt_gz;
+-rwxrwxr-x   1 root supergroup     41.3 M 2018-09-02 00:43 /user/hive/warehouse/your_name.db/stop_times_txt_gz/000000_0.deflate
+```
 
+## Sequence file
+
+```sql
 CREATE TABLE stop_times_seq
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS SEQUENCEFILE
 AS SELECT * FROM stop_times_txt;
+```
 
-hive (stm_gtfs)> dfs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_seq;
+```
+hadoop fs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_seq;
 -rwxrwxr-x   1 root supergroup    311.2 M 2018-09-02 00:02 /user/hive/warehouse/stm_gtfs.db/stop_times_seq/000000_0
+```
 
 hive (stm_gtfs)> dfs -tail /user/hive/warehouse/stm_gtfs.db/stop_times_seq/000000_0;
 :10,13,16+&18S_18S_F2_2_0,05:52:13,05:52:13,12,17+&18S_18S_F2_2_0,05:53:44,05:53:44,11,18+&18S_18S_F2_2_0,...
 
--- Sequence file compressed
+## Sequence file compressed
 CREATE TABLE stop_times_seq_gz
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
 AS SELECT * FROM stop_times_txt;
