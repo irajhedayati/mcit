@@ -55,7 +55,7 @@ SELECT * FROM ext_stop_times LIMIT 10
 Create another table (managed) by importing data from external file
 
 ```sql
-CREATE TABLE stop_times_txt 
+CREATE TABLE your_name.stop_times_txt 
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE
 AS SELECT * FROM your_name.ext_stop_times;
 ```
@@ -63,8 +63,8 @@ AS SELECT * FROM your_name.ext_stop_times;
 Check the files:
 
 ```bash
-hadoop fs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_txt;
--rwxrwxr-x   1 root supergroup  248.1 M 2018-09-01 23:53 /user/hive/warehouse/stm_gtfs.db/stop_times_txt/000000_0
+hadoop fs -ls -h /user/hive/warehouse/your_name.db/stop_times_txt
+-rwxrwxr-x   1 root supergroup  248.1 M 2018-09-01 23:53 /user/hive/warehouse/your_name.db/stop_times_txt/000000_0
 ```
 
 *Question*: Why only one file?
@@ -78,16 +78,23 @@ hadoop fs -tail /user/hive/warehouse/stm_gtfs.db/stop_times_txt/000000_0;
 ...
 ```
 
--- Output compression
-hive (stm_gtfs)> set mapred.map.output.compression.codec=org.apache.hadoop.io.compress.GZipCodec;
-hive (stm_gtfs)> set hive.exec.compress.output=true;
+## Output compression
 
+```
+jdbc:hive2://node1:10000 (default)> set mapred.map.output.compression.codec=org.apache.hadoop.io.compress.GZipCodec;
+jdbc:hive2://node1:10000 (default)> set hive.exec.compress.output=true;
+```
+
+``
 CREATE TABLE stop_times_txt_gz
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
 AS SELECT * FROM stop_times_txt;
+``
 
-hive (stm_gtfs)> dfs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_txt_gz;
+```bash
+hadoop dfs -ls -h /user/hive/warehouse/stm_gtfs.db/stop_times_txt_gz;
 -rwxrwxr-x   1 root supergroup     41.3 M 2018-09-02 00:43 /user/hive/warehouse/stm_gtfs.db/stop_times_txt_gz/000000_0.deflate
+```
 
 -- Sequence file
 
