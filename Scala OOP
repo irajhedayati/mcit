@@ -1,0 +1,46 @@
+// In order to print a statement
+println("Hello world!")
+
+// Mutable variables
+var x: Int = 0
+println(x)
+x = 10
+println(x)
+
+
+// Inline expressions in print message using $x or ${expression}
+println(s"Variable 'x' is reassigned to $x")
+println(s"The value of the variable 'x' is $x. Adding 1 would result to ${x + 1}.")
+
+// Immutable variables
+val y: Int = 0
+println(y)
+// y = 10
+
+// Trait and class and OOP in Scala
+trait Shape {
+  def draw(): String
+}
+
+class Circle(r: Double) extends Shape {
+  def draw(): String = s"This is a circle of radius $r and area of ${area()}"
+  def area(): Double = 3.14 * r * r
+}
+
+println(new Circle(2).draw())
+
+class Cylinder(r: Double, h: Double) extends Circle(r) {
+  override def draw(): String = s"This is a cylindar of area ${area()}"
+  // Nive: override def area(): Double = 2 * 3.14 * r * h + 2 * 3.14 * r * r
+  // Using circle's area definition
+  override def area(): Double = 2 * 3.14 * r * h + 2 * super.area()
+  
+}
+
+println(new Cylinder(2, 4).draw())
+
+// Companion object
+
+object Circle {
+  val pi: Double = 3.14
+}
