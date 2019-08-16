@@ -25,8 +25,9 @@ object MainSQL extends App {
     * - Select "Project Structure"
     * - From the left pane, select "modules"
     * - From the right pane, select "Dependencies"
-    * - In the right side, you see a "+" sign, click and select 
-    *
+    * - In the right side, you see a "+" sign, click and select "Jars or Directories"
+    * - Browse to the directory that has the Hadoop configuration file
+    * - "OK" a couple of times
     */
   val trips = spark.read
     .format("csv")
@@ -43,5 +44,6 @@ object MainSQL extends App {
   trips.printSchema()
   frequencies.printSchema()
 
+  // Close Spark session
   spark.close()
 }
