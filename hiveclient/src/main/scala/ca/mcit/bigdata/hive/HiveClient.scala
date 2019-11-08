@@ -1,6 +1,6 @@
 package ca.mcit.bigdata.hive
 
-import java.sql.{Connection, DriverManager}
+import java.sql.{Connection, DriverManager, ResultSet}
 
 /**
  * In this class, we try to connect to a Hive server using JDBC connection.
@@ -20,13 +20,28 @@ object HiveClient extends App {
   // Step 2: connect to the server
   // A connection requires a connection string. This is equal to what
   // we use in beeline to connect to the Hive server
-  val connection: Connection = DriverManager.getConnection("jdbc:hive2://172.16.129.58:10000")
+  val connection: Connection = DriverManager.getConnection("jdbc:hive2://172.16.129.58:10000/iraj")
   val stmt = connection.createStatement()
 
   // Step 3: run the query and process the results
-  val res = stmt.executeQuery("SHOW TABLES IN iraj")
+  stmt.execute("SET hive.exec.dynamic.partition.mode=nonstrict")
+  stmt.execute("DROP TABLE IF EXISTS enriched_movie_p")
+  stmt.execute("CREATE TABLE enriched_movie_p ( " +
+    " mid INT, " +
+    " title STRING, " +
+    " rid INT, " +
+    " stars INT, " +
+    " ratingdate STRING) " +
+    " PARTITIONED BY (year INT) " +
+    " ROW FORMAT DELIMITED " +
+    " FIELDS TERMINATED BY ',' " +
+    " STORED AS TEXTFILE")
+  stmt.executeQuery("INSERT OVERWRITE TABLE enriched_movie_p PARTITION(year) "+
+    " SELECT mid, title, rid, stars, ratingdate, year "+
+    " FROM enriched_movie")
+  val res: ResultSet = stmt.executeQuery("SELECT * FROM enriched_movie")
   while (res.next()) {
-    println(res.getString(1))
+    println("MID: " + res.getInt(2))
   }
 
   // Step 4: close resources
