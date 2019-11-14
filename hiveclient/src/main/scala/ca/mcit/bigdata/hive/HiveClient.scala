@@ -19,8 +19,17 @@ object HiveClient extends App {
 
   // Step 2: connect to the server
   // A connection requires a connection string. This is equal to what
-  // we use in beeline to connect to the Hive server
-  val connection: Connection = DriverManager.getConnection("jdbc:hive2://172.16.129.58:10000/iraj")
+  // we use in beeline to connect to the Hive server.
+  /*
+  jdbc:hive2://<host>:<port>/<dbName>;<sessionConfs>?<hiveConfs>#<hiveVars>
+  - host = 172.16.129.58
+  - port = 10000 (default Hive server port)
+  - dbName = iraj
+  - sessionConfs (semicolon separated)
+    - user = cloudera
+    - password = cloudera
+   */
+  val connection: Connection = DriverManager.getConnection("jdbc:hive2://172.16.129.58:10000/iraj;user=cloudera;password=cloudera")
   val stmt = connection.createStatement()
 
   // Step 3: run the query and process the results
