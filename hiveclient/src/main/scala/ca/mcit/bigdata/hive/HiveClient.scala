@@ -34,8 +34,8 @@ object HiveClient extends App {
 
   // Step 3: run the query and process the results
   stmt.execute("SET hive.exec.dynamic.partition.mode=nonstrict")
-  stmt.execute("DROP TABLE IF EXISTS enriched_movie_p")
-  stmt.execute("CREATE TABLE enriched_movie_p ( " +
+  stmt.execute("DROP TABLE IF EXISTS iraj.enriched_movie_p")
+  stmt.execute("CREATE TABLE iraj.enriched_movie_p ( " +
     " mid INT, " +
     " title STRING, " +
     " rid INT, " +
@@ -45,9 +45,9 @@ object HiveClient extends App {
     " ROW FORMAT DELIMITED " +
     " FIELDS TERMINATED BY ',' " +
     " STORED AS TEXTFILE")
-  stmt.executeQuery("INSERT OVERWRITE TABLE enriched_movie_p PARTITION(year) "+
+  stmt.executeQuery("INSERT OVERWRITE TABLE iraj.enriched_movie_p PARTITION(year) "+
     " SELECT mid, title, rid, stars, ratingdate, year "+
-    " FROM enriched_movie")
+    " FROM iraj.enriched_movie")
   val res: ResultSet = stmt.executeQuery("SELECT * FROM enriched_movie")
   while (res.next()) {
     println("MID: " + res.getInt(2))
