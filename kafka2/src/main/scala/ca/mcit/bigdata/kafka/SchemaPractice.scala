@@ -18,5 +18,5 @@ object SchemaPractice extends App {
     schemaRegistryClient.getBySubjectAndID("iraj_test", irajSchemaMetadata.getId)
   println(irajSchema.toString(true))
    */
-  schemaRegistryClient.register("iraj_movie", Movie.SCHEMA$)
+  schemaRegistryClient.register("iraj_enriched_movie-value", EnrichedMovie.SCHEMA$)
 }
