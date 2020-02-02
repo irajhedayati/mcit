@@ -13,10 +13,23 @@ object MainStreaming extends App {
   val ssc: StreamingContext = new StreamingContext(sc, Seconds(5))
 
   // Source
-  //val lines: ReceiverInputDStream[String] = ssc.socketTextStream("localhost", 9999)
-  val lines = ssc.textFileStream("/user/cloudera/iraj/stm")
+  val lines: ReceiverInputDStream[String] = ssc.socketTextStream("localhost", 9999)
+//  val lines = ssc.textFileStream("/user/cloudera/iraj/stm")
 
   // What to do?
+
+  //lines.print()
+  //lines.flatMap(_.split(" ")).print()
+  // Spark streaming is a streaming application
+  // In streaming application we stream data
+
+  // Spark streaming is a streaming application
+  //In streaming application we stream data
+  // [Spark,streaming,is,a,streaming,application,In,streaming,application,we,stream,data]
+
+  lines.foreachRDD(rdd => rdd.flatMap(_.split(" ")).map((_,1)).reduceByKey(_ + _).take(10).foreach(println))
+
+
   val words: DStream[String] = lines.flatMap(_.split(" "))
   val wordCounts: DStream[(String, Int)] = words.map((_, 1)).reduceByKey(_ + _)
   wordCounts.print()

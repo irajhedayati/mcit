@@ -5,14 +5,17 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
   * This application is using Spark Core only
   */
-object Main extends App {
+object Main extends App with Serializable {
+
+  def doubleIt(x: Int): Int = x * 2
+  def doubleItProxy(y: Int): Int = doubleIt(y)
 
   // Prepare Spark Context
   val sparkConf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Test Spark")
   val sc: SparkContext = new SparkContext(sparkConf)
 
   // Implement your application logic here
-  val x: Double =
+  val x =
     sc
       /* Create an RDD of integer with 4 partitions (source) */
       .parallelize( 1 to 1000, 4)
@@ -26,7 +29,7 @@ object Main extends App {
         * )
         * That could be shorten as:
         */
-      .map(_ * 2)
+      .map(z => doubleItProxy(z))
       .filter(_ < 100)
 
       // Aggregate RDD using sum function

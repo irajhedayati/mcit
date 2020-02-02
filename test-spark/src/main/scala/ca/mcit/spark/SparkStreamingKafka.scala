@@ -12,14 +12,14 @@ object SparkStreamingKafka extends App {
 
     // Configuration
   val kafkaParams = Map[String, String] (
-    ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -> "localhost:9092",
+    ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -> "172.16.129.58:9092",
     ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG -> classOf[StringDeserializer].getName,
     ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG -> classOf[StringDeserializer].getName,
     ConsumerConfig.GROUP_ID_CONFIG -> "test",
     ConsumerConfig.AUTO_OFFSET_RESET_CONFIG -> "earliest",
     ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG -> "false"
   )
-  val topic = "stop_times"
+  val topic = "iraj_movie_v2"
 
   // Setup
   /**
@@ -50,11 +50,17 @@ object SparkStreamingKafka extends App {
     ConsumerStrategies.Subscribe[String, String](Array(topic), kafkaParams)
   )
   // what to do?
-  case class StopTime()
+  case class Movie(mId: Int, title: String, year: Int, directory: Option[String])
   val x: DStream[String] = stream.map(record => record.value())
   x.foreachRDD(microRdd => {
     // microRDD is the RDD created by DStream at each 5 seconds time interval from the input stream
-    microRdd.map(_.split(",")).map(_(0)).take(10).foreach(println)
+    import spark.implicits._
+    val df = microRdd
+      .map(_.split(",", -1))
+      .map(x => Movie(x(0).toInt, x(1), x(2).toInt, Some(x(3))))
+      .toDF
+
+    df.show()
   })
 
   ssc.start()
