@@ -2,7 +2,7 @@ package ca.mcit.bigdata.zk
 
 object JoinGroupTesting extends App {
 
-  val server = "172.16.129.58:2181"
+  val server = "quickstart.cloudera:2181"
 
   val dn1 = new DataNode("zoo", "dn1")
   dn1.connect(server)

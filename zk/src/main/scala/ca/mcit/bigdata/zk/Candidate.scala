@@ -17,8 +17,8 @@ import org.apache.curator.retry.ExponentialBackoffRetry
 class Candidate(val name: String) extends LeaderSelectorListener {
 
   val retry = new ExponentialBackoffRetry(1000, 10)
-  lazy val client: CuratorFramework = CuratorFrameworkFactory.newClient("172.16.129.58:2181", retry)
-  lazy val leaderSelector = new LeaderSelector(client, "/summer2019/iraj/election", this)
+  lazy val client: CuratorFramework = CuratorFrameworkFactory.newClient("quickstart.cloudera:2181", retry)
+  lazy val leaderSelector = new LeaderSelector(client, "/fall2019/iraj/election", this)
   /**
    * Start the candidate by joining to an election process
    * 1. Connect to ZK
@@ -27,7 +27,7 @@ class Candidate(val name: String) extends LeaderSelectorListener {
     client.start()
     println(s"$name : Connect to ZK")
     if (!client.blockUntilConnected(10, TimeUnit.SECONDS))
-      println(s"$name : Unable to connect to 172.16.129.58:2181")
+      println(s"$name : Unable to connect to quickstart.cloudera:2181")
     println(s"$name : Connection to ZK was successful! Trying to join to election")
     leaderSelector.setId(name)
     leaderSelector.start()
