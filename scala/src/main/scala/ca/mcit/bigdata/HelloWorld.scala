@@ -1,17 +1,18 @@
 package ca.mcit.bigdata
 
-import scala.io.Source
+import scala.io.{BufferedSource, Source}
 
 
 object HelloWorld extends App {
    //println("Hello world!")
-  val fileSource = Source.fromFile("/home/bd-user/Documents/person.csv")
+  val fileSource: BufferedSource =
+    Source.fromURL("https://raw.githubusercontent.com/irajhedayati/mcit/master/person.csv")
 
   fileSource
     .getLines()                    // a collection of lines
 
     .map(_.split(","))  // a collection of collection of fields
-    .map(p => Person(p(0), p(1).toInt)) // a collection of Persons
+//    .map(p => Person(p(0), p(1).toInt)) // a collection of Persons
 
     .foreach(println)
 

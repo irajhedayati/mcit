@@ -1,10 +1,13 @@
 package ca.mcit.bigdata
 
-case class Person(name: String, age: Int)
+case class Person(id: Int, fullName: String)
 
 object Person {
+
+  /**  2,Quintin,Queen,"123 6th St. Melbourne, FL 32904" */
   def apply(csvLine: String): Person = {
-    val p = csvLine.split(",")
-    new Person(p(0), p(1).toInt)
+    val p: Array[String] = csvLine.split(",")
+    Person(p(0).toInt, s"${p(1)} ${p(2)}")
   }
+
 }
