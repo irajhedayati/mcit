@@ -8,10 +8,10 @@ object FilePractice extends App {
   val filePath = "/home/bd-user/Downloads/person.csv"
   val source: BufferedSource = Source.fromFile(filePath)
 
-  source.getLines()
-      .map(line => line.split(","))
-      .map(a => Person2(a(0).toInt, a(1), a(2)))
-      .foreach(person => println(person))
+//  source.getLines()
+//      .map(line => line.split(","))
+//      .map(a => Person2(a(0).toInt, a(1), a(2)))
+//      .foreach(person => println(person))
 
   source.close()
 }
