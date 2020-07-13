@@ -13,47 +13,51 @@ import java.sql.{Connection, DriverManager, ResultSet}
  * 4. Close the connection
  */
 object HiveClient extends App {
-  // Step 1: load the Hive JDBC driver
+
   val driverName: String = "org.apache.hive.jdbc.HiveDriver"
   Class.forName(driverName)
-
-  // Step 2: connect to the server
-  // A connection requires a connection string. This is equal to what
-  // we use in beeline to connect to the Hive server.
-  /*
-  jdbc:hive2://<host>:<port>/<dbName>;<sessionConfs>?<hiveConfs>#<hiveVars>
-  - host = 172.16.129.58
-  - port = 10000 (default Hive server port)
-  - dbName = iraj
-  - sessionConfs (semicolon separated)
-    - user = cloudera
-    - password = cloudera
-   */
-  val connection: Connection = DriverManager.getConnection("jdbc:hive2://172.16.129.58:10000/iraj;user=cloudera;password=cloudera")
+  val connectionString: String = "jdbc:hive2://quickstart.cloudera:10000/iraj;user=cloudera;"
+  val connection = DriverManager.getConnection(connectionString)
   val stmt = connection.createStatement()
 
-  // Step 3: run the query and process the results
-  stmt.execute("SET hive.exec.dynamic.partition.mode=nonstrict")
-  stmt.execute("DROP TABLE IF EXISTS iraj.enriched_movie_p")
-  stmt.execute("CREATE TABLE iraj.enriched_movie_p ( " +
-    " mid INT, " +
-    " title STRING, " +
-    " rid INT, " +
-    " stars INT, " +
-    " ratingdate STRING) " +
-    " PARTITIONED BY (year INT) " +
-    " ROW FORMAT DELIMITED " +
-    " FIELDS TERMINATED BY ',' " +
-    " STORED AS TEXTFILE")
-  stmt.executeQuery("INSERT OVERWRITE TABLE iraj.enriched_movie_p PARTITION(year) "+
-    " SELECT mid, title, rid, stars, ratingdate, year "+
-    " FROM iraj.enriched_movie")
-  val res: ResultSet = stmt.executeQuery("SELECT * FROM enriched_movie")
-  while (res.next()) {
-    println("MID: " + res.getInt(2))
+//  stmt.execute("DROP TABLE iraj.ext_movie")
+//  // run non-SELECT queries
+//  stmt.executeUpdate("DROP TABLE iraj.ext_movie")
+
+  stmt.execute(
+//  stmt.executeUpdate(
+    """CREATE TABLE iraj.enriched_movie_p (
+      | mid INT,
+      | title STRING,
+      | rid INT,
+      | stars INT,
+      | ratingdate STRING
+      |) STORED AS parquet""".stripMargin
+  )
+  stmt.executeUpdate("""INSERT OVERWRITE TABLE iraj.enriched_movie_p
+                       |SELECT m.mid, title, rid, stars, ratingdate
+                       |FROM iraj.ext_movie m JOIN iraj.ext_rating r ON m.mid = r.mid""".stripMargin)
+
+  // run SELECT queries
+  stmt.executeQuery("SELECT * FROM iraj.ext_movie")
+
+//  val rs = stmt.executeQuery(
+//    """SELECT title, avg(stars)
+//      |FROM iraj.enriched_movie_p
+//      |GROUP BY title""".stripMargin)
+  val hasResultSet: Boolean = stmt.execute(
+    """
+      |SELECT title, avg(stars)
+      |FROM iraj.enriched_movie_p
+      |GROUP BY title""".stripMargin)
+
+  if (hasResultSet) {
+    val rs = stmt.getResultSet
+    while(rs.next()) {
+      println(s"Title: ${rs.getString(1)} \t Avg. Stars: ${rs.getFloat(2)}")
+    }
   }
 
-  // Step 4: close resources
   stmt.close()
   connection.close()
 }
