@@ -1,8 +1,0 @@
-@namespace("ca.mcit.bigdata.kafka")
-protocol McitBigData {
-  record Movie {
-    int mid;
-    string title;
-    union { null, string } director = null;
-  }
-}
