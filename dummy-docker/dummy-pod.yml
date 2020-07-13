@@ -6,5 +6,6 @@ spec:
   containers:
     - name: iraj-dummy-pod
       image: hedayati/toolset:latest
+      imagePullPolicy: Always
       command: ["/bin/bash", "-ec", "while :; do echo '.'; sleep 5 ; done"]
   restartPolicy: Never
