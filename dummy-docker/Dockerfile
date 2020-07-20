@@ -1,4 +1,4 @@
-# An image of Ubuntu with the tools I need to debug my applicaitons on Kubernetes
+# An image of Ubuntu with the tools I need to debug my applications on Kubernetes
 FROM openjdk:8
 
 RUN apt update && \

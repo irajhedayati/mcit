@@ -8,4 +8,11 @@ spec:
       image: hedayati/toolset:latest
       imagePullPolicy: Always
       command: ["/bin/bash", "-ec", "while :; do echo '.'; sleep 5 ; done"]
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2500Mi
+        limits:
+          cpu: 1000m
+          memory: 2500Mi
   restartPolicy: Never
