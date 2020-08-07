@@ -18,7 +18,7 @@ object MainStreaming extends App {
 
   // What to do?
 
-  //lines.print()
+  lines.print()
   //lines.flatMap(_.split(" ")).print()
   // Spark streaming is a streaming application
   // In streaming application we stream data

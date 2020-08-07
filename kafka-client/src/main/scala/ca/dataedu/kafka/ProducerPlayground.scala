@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.{IntegerSerializer, StringSerialize
 
 object ProducerPlayground extends App {
 
-  val topicName = "test-1"
+  val topicName = "test_2"
 
   val producerProperties = new Properties()
   producerProperties.setProperty(
@@ -22,14 +22,14 @@ object ProducerPlayground extends App {
 
   val producer = new KafkaProducer[Int, String](producerProperties)
 
-  producer.send(new ProducerRecord[Int, String](topicName, customPartitioner(10), 10, "Message 1"))
-  producer.send(new ProducerRecord[Int, String](topicName, customPartitioner(20),20, "Message 2"))
-  producer.send(new ProducerRecord[Int, String](topicName, customPartitioner(30),30, "Message 3"))
-  producer.send(new ProducerRecord[Int, String](topicName, customPartitioner(40),40, "Message 4"))
-  producer.send(new ProducerRecord[Int, String](topicName, customPartitioner(50),50, "Message 5"))
-  producer.send(new ProducerRecord[Int, String](topicName, customPartitioner(60),60, "Message 6"))
+  producer.send(new ProducerRecord[Int, String](topicName, 10, "10,S1"))
+  producer.send(new ProducerRecord[Int, String](topicName, 20, "20,S2"))
+  producer.send(new ProducerRecord[Int, String](topicName, 30, "30,S3"))
+  producer.send(new ProducerRecord[Int, String](topicName, 40, "40,S4"))
+  producer.send(new ProducerRecord[Int, String](topicName, 50, "50,S5"))
+  producer.send(new ProducerRecord[Int, String](topicName, 60, "60,S6"))
 
-  producer.flush() // producer.send works async and just to make sure all the messages are published
+  producer.flush()
 
-  def customPartitioner(key: Int): Int = key % 3
+  def customPartitioned(key: Int): Int = key % 3
 }

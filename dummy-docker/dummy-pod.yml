@@ -1,18 +1,18 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: iraj-dummy-pod
+  name: ete-perf-monitor
 spec:
   containers:
-    - name: iraj-dummy-pod
+    - name: ete-perf-monitor
       image: hedayati/toolset:latest
       imagePullPolicy: Always
       command: ["/bin/bash", "-ec", "while :; do echo '.'; sleep 5 ; done"]
       resources:
         requests:
-          cpu: 1000m
-          memory: 2500Mi
+          cpu: 200m
+          memory: 700Mi
         limits:
-          cpu: 1000m
-          memory: 2500Mi
+          cpu: 200m
+          memory: 700Mi
   restartPolicy: Never

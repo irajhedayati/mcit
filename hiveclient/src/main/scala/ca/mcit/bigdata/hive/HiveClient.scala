@@ -28,7 +28,7 @@ object HiveClient extends App {
 //  stmt.executeUpdate(
     """CREATE TABLE iraj.enriched_movie_p (
       | mid INT,
-      | title STRING,
+      | title STRING
       | rid INT,
       | stars INT,
       | ratingdate STRING
