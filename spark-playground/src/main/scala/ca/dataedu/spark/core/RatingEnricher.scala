@@ -1,6 +1,5 @@
 package ca.dataedu.spark.core
 
-import ca.dataedu.spark.core.SparkSql.sparkSession
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord}
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.rdd.RDD
