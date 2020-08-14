@@ -1,5 +1,6 @@
 package ca.dataedu.spark.core
 
+import ca.dataedu.spark.core.model.{Movie, Rating}
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord}
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.rdd.RDD
@@ -8,7 +9,7 @@ import org.apache.spark.streaming.dstream.{DStream, InputDStream}
 import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
-object RatingEnricher extends App {
+object RatingEnricher extends App with Base {
   // 1. create streaming context
   val spark: SparkSession = SparkSession
     .builder()
@@ -38,28 +39,13 @@ object RatingEnricher extends App {
   val lines: DStream[String] = messages.map(_.value())
 
   // 3. business logic
-  case class Movie(mID: Int, title: String, year: Int, director: String)
   val movies: RDD[Movie] = spark.sparkContext
     .textFile("/user/fall2019/iraj/movie/movie.csv")
     .filter(!_.contains("mID"))
     .map(_.split(",", -1))
-    .map(row => Movie(row(0).toInt, row(1), row(2).toInt, row(3)))
-  val keyByIdMovies = movies.keyBy(_.mID)
+    .map(row => Movie(row(0).toInt, row(1), row(2).toInt, Some(row(3))))
+  val keyByIdMovies = movies.keyBy(_.mId)
 
-  case class Rating(rID: Int, mID: Int, stars: Int, ratingDate: Option[String])
-  object Rating {
-    /**
-      * 201,101,2,2011-01-22
-      * 202,106,4,
-      */
-    def apply(csv: String): Rating = {
-      val fields = csv.split(",", -1)
-      val ratingDate = if (fields(3).isEmpty) None else Option(fields(3))
-      Rating(fields(0).toInt, fields(1).toInt, fields(2).toInt, ratingDate)
-    }
-    def toCsv(rating: Rating, movie: Movie): String =
-      s"${rating.rID},${rating.stars},${movie.title}"
-  }
   lines.foreachRDD( rdd => { // Business logic per micro-batch
     val rating: RDD[Rating] = rdd.map(Rating(_))
     val keyByMovieRating: RDD[(Int, Rating)] = rating.keyBy(_.mID)

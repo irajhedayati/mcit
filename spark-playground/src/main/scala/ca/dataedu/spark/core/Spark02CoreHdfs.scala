@@ -4,7 +4,7 @@ import ca.dataedu.spark.core.model.{Movie, Rating}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
-object SparkCoreHdfs extends App {
+object Spark02CoreHdfs extends App with Base {
   // 0 configuration
   val sparkConf = new SparkConf()
     .setMaster("local[*]")
@@ -18,7 +18,7 @@ object SparkCoreHdfs extends App {
   val ratingsRdd: RDD[Rating] =
     sc.textFile("/user/fall2019/iraj/rating/rating.csv")
       .filter(!_.contains("mID"))
-      .map(Rating.fromCsv)
+      .map(Rating(_))
 
   val x: RDD[(Int, Movie)] = moviesRdd.keyBy(_.mId)
   val y: RDD[(Int, Rating)] = ratingsRdd.keyBy(_.mID)

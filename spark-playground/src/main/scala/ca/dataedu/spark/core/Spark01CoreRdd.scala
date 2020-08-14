@@ -4,7 +4,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.util.Random
 
-object SparkCoreRdd extends App {
+object Spark01CoreRdd extends App with Base {
 
   // 0. Spark configuration
   /**

@@ -3,7 +3,7 @@ package ca.dataedu.spark.core
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
-object SparkSqlJoin extends App {
+object Spark07SqlJoin extends App with Base {
 
   /** on HDFS */
   val movieFileName = "/user/fall2019/iraj/movie/movie.csv"

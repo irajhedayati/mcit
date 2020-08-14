@@ -7,7 +7,7 @@ import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, Loca
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
-object SparkStreamingWithKafka extends App {
+object Spark12StreamingWithKafka extends App {
 
   // 1. create streaming context
   // If using spark-submit script, the master should not be set

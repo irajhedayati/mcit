@@ -2,7 +2,7 @@ package ca.dataedu.spark.core
 
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
-object SparkSqlFromSource extends App {
+object Spark04SqlFromSource extends App with Base {
 
   /** on HDFS */
   val fileName = "/user/fall2019/iraj/movie/movie.csv"
