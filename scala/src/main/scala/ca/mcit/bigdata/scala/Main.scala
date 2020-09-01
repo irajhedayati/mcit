@@ -1,4 +1,4 @@
-package ca.mcit.bigdata
+package ca.mcit.bigdata.scala
 
 object Main extends App {
   val customer = CustomerUtil("John,30")

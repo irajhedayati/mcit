@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.function
+package ca.mcit.bigdata.scala.function
 
 /**
  * A higher-order function is a function that takes another functions as parameters.

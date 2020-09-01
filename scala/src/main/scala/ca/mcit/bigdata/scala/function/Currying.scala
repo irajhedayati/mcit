@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.function
+package ca.mcit.bigdata.scala.function
 
 /**
  * Currying is the technique of transforming a function with multiple arguments into a function with fewer argument

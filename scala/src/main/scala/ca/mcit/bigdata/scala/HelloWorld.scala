@@ -1,4 +1,4 @@
-package ca.mcit.bigdata
+package ca.mcit.bigdata.scala
 
 import scala.io.{BufferedSource, Source}
 

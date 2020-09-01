@@ -1,6 +1,6 @@
-package ca.mcit.bigdata
+package ca.mcit.bigdata.scala
 
-import ca.mcit.bigdata.schema.Stop
+import ca.mcit.bigdata.scala.schema.Stop
 
 import scala.io.Source
 

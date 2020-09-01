@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.function
+package ca.mcit.bigdata.scala.function
 
 object HigherOrderFunction2 {
 

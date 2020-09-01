@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.function
+package ca.mcit.bigdata.scala.function
 
 /**
  * Function is the first-class citizen in Scala

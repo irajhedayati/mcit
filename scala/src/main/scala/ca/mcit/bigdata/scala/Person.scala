@@ -1,4 +1,4 @@
-package ca.mcit.bigdata
+package ca.mcit.bigdata.scala
 
 case class Person(id: Int, fullName: String)
 

@@ -1,4 +1,4 @@
-package ca.mcit.bigdata
+package ca.mcit.bigdata.scala
 
 case class Student(id: Int, name: String, city: String)
 case class Geo(city: String, province: String)

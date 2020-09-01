@@ -1,4 +1,4 @@
-package ca.mcit.bigdata
+package ca.mcit.bigdata.scala
 
 class RationalNumber(val x: Int, val y: Int) {
 

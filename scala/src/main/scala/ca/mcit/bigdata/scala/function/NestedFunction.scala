@@ -1,5 +1,4 @@
-package ca.mcit.bigdata.function
-
+package ca.mcit.bigdata.scala.function
 
 /**
  * It is possible to define a function within another function. This is to limit the scope of a function.

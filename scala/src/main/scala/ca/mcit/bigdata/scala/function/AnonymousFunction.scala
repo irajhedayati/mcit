@@ -1,6 +1,6 @@
-package ca.mcit.bigdata.function
+package ca.mcit.bigdata.scala.function
 
-import ca.mcit.bigdata.function.HigherOrderFunction2.isOdd
+import HigherOrderFunction2.isOdd
 
 /**
  * An anonymous function is a function that doesn't have a name.

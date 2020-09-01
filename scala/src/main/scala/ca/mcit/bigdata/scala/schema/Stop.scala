@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.schema
+package ca.mcit.bigdata.scala.schema
 
 case class Stop(
                stop_id: String,
