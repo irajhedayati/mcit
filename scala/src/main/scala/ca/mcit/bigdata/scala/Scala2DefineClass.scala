@@ -1,5 +1,7 @@
 package ca.mcit.bigdata.scala
 
+import ca.mcit.bigdata.scala.schema.Person
+
 object HelloWorld2 extends App {
 
   println("Hello world!")

@@ -1,4 +1,4 @@
-package ca.mcit.bigdata.scala
+package ca.mcit.bigdata.scala.schema
 
 case class Trip(
                  route_id: Int,
