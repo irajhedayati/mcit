@@ -1,5 +1,7 @@
 package ca.mcit.bigdata.scala
 
+import ca.mcit.bigdata.scala.schema.{Route, RouteTrip, Trip}
+
 trait Join[L, R, Q] {
   def join(a: List[L], b: List[R]): List[Q]
 }
