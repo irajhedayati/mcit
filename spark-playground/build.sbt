@@ -12,3 +12,4 @@ libraryDependencies += "org.apache.spark" %% "spark-sql"                  % spar
 libraryDependencies += "org.apache.spark" %% "spark-streaming"            % sparkVersion
 libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % sparkVersion
 libraryDependencies += "org.apache.spark" %% "spark-mllib"                % sparkVersion
+libraryDependencies += "org.apache.spark" %% "spark-graphx"               % sparkVersion
