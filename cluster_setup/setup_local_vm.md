@@ -50,8 +50,16 @@ skip to the next step.
 
 - Add the following line
 
+   For Linux users:
+ 
    ```
    export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+   ```
+  
+   For Mac users:
+
+   ```
+   export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
    ```
 
 - Source the script to take effect in the current session. As you set it in
@@ -153,15 +161,7 @@ from the cluster and fedd to Hadoop.
    echo $HADOOP_CONF_DIR
    ```
 
-- Download the required configuration files from cluster to the directory. If asked for 
-a password, use **cloudera**.
-
-   ```
-   scp cloudera@quickstart.cloudera:/etc/hadoop/conf/core-site.xml $HADOOP_CONF_DIR/
-   scp cloudera@quickstart.cloudera:/etc/hadoop/conf/hdfs-site.xml $HADOOP_CONF_DIR/
-   scp cloudera@quickstart.cloudera:/etc/hadoop/conf/mapred-site.xml $HADOOP_CONF_DIR/
-   scp cloudera@quickstart.cloudera:/etc/hadoop/conf/yarn-site.xml $HADOOP_CONF_DIR/
-   ```
+- Download the required configuration files from cluster to the directory (they will be provided by your instructor).
 
 - Test your connection
 
