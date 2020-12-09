@@ -29,7 +29,7 @@ object Spark03Sql extends App with Base {
   val movieRdd3: RDD[Row] = movieRdd
     .map(_.split(","))
     .map(csv => Row(csv(0).toInt, csv(1), csv(2).toInt, csv(3)))
-  val schema = StructType(List(
+  val schema: StructType = StructType(List(
     StructField("mID", IntegerType, nullable = false),
     StructField("title", StringType, nullable = false),
     StructField("year", IntegerType),

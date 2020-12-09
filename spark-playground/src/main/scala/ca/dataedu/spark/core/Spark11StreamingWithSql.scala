@@ -40,5 +40,6 @@ object Spark11StreamingWithSql extends App with Base {
   // 4. Start the streaming and keep it running
   ssc.start()
   ssc.awaitTermination()
+  ssc.stop(stopSparkContext = true, stopGracefully = true)
 
 }

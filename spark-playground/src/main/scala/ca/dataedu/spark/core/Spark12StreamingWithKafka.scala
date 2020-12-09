@@ -43,6 +43,7 @@ object Spark12StreamingWithKafka extends App {
   // 4. Start streaming and keep running
   ssc.start()
   ssc.awaitTermination()
+  ssc.stop(stopSparkContext = true, stopGracefully = true)
 
   /** Calculate the word count */
   def businessLogic(rdd: RDD[String]): Unit = {

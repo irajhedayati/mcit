@@ -1,6 +1,6 @@
 package ca.mcit.bigdata.hive
 
-import java.sql.{Connection, DriverManager, ResultSet}
+import java.sql.DriverManager
 
 /**
  * In this class, we try to connect to a Hive server using JDBC connection.

@@ -22,6 +22,7 @@ object Spark10StreamingTextFile extends App with Base {
   // 4. Start the streaming and keep it running
   ssc.start()
   ssc.awaitTermination()
+  ssc.stop(stopSparkContext = true, stopGracefully = true)
 
   /** Calculate the word count */
   def businessLogic(rdd: RDD[String]): Unit = {
