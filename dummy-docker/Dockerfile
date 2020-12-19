@@ -12,6 +12,11 @@ RUN wget -qO - http://packages.confluent.io/deb/3.1/archive.key | apt-key add - 
 
 RUN apt install -y jq
 
+# Install Scala and Ammonite-REPL
+RUN wgere https://downloads.lightbend.com/scala/2.12.12/scala-2.12.12.deb && \
+    dpkg -i scala-2.12.12.deb && \
+    sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/lihaoyi/Ammonite/releases/download/2.3.8/2.13-2.3.8) > /usr/local/bin/amm && chmod +x /usr/local/bin/amm'
+
 RUN mkdir /root/bin
 ADD register-avro-schema.sh /root/bin/register-avro-schema.sh
 
