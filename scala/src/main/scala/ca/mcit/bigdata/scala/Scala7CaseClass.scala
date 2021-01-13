@@ -1,11 +1,23 @@
 package ca.mcit.bigdata.scala
 
 /**
-  * 1. toString override needed for a class
-  * 2. attributes are private by default, need to use val/var
-  * 3. equals needed for a class to compare objects properly
-  * 4. in order to keep objects immutable, need to instantiate new object
-  * 5. case class solves all the problems
+  * Scala "case class" helps us to model immutable data with less code overhead.
+  *
+  * To see the benefits and also make a connection, the same behavior can be
+  * implemented using normal class if:
+  * {{{
+  *   1. We override `toString` function to print data they hold instead of
+  *   object reference
+  *   2. Add var/val to make attributes public and accessible
+  *   3. We override `equals` to be able to compare to objects properly
+  *   4. in order to keep objects immutable, need to instantiate new object
+  * }}}
+  *
+  * Also, with normal classes we need `new` keyword to instantiate a new object
+  * while the "case class" doesn't need that (less code). On the other hand,
+  * to derive  a new instance (change one of the attributes and get a new instance),
+  * we should create a new instance and then copy all the values while "case class"
+  * provides a `copy` method that you can easily achieve this.
   */
 object Scala8CaseClass extends App {
 
@@ -27,6 +39,15 @@ object Scala8CaseClass extends App {
 
   println(s"John is ${john.age} years old")
 
+  /*
+    Java
+    "string1" == "string2"      : compare references
+    "string1".equals("string2") : calls 'equals'
+
+    Scala
+    "string1" == "string2"      : calls 'equals'
+    "string1".equals("string2") : calls 'equals'
+ */
   val john2 = new Person2("John", 30)
   println(john == john2)
 
