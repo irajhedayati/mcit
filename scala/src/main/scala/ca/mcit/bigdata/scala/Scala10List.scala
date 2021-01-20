@@ -40,6 +40,10 @@ object Scala10List extends App {
 
   // Frequently used API of List
   // numbers = List(1, 2, 3)
+  val i = 1
+  println(s"Item at index $i is ${numbers(i)}")
+  println(s"Item at index 2 is ${numbers(2)}")
+
   val head = numbers.head
 
   println(s"Head of the list is $head")
@@ -106,6 +110,17 @@ object Scala10List extends App {
   listMatcher(List(1, 2, 3))
   listMatcher(List(4))
   listMatcher(List(4, 5, 6))
+
+  val n = List(1, 2)
+  println(n :: List("New York"))
+
+  val x1 = 1
+  val y1 = "S"
+  val xs = 1.0f
+  val ys = 2.2f
+  println(x1 :: (y1 :: (List(xs, ys) :: Nil)))
+  println(x1 :: (y1 :: (List(xs, ys) :: List(1))))
+  println(x1 :: (y1 :: (List(xs, ys) :: List(1, 2))))
 
   // more on the collection APIs
   println(s"The first 2 elements of List(1, 2, 3, 4) are ${List(1, 2, 3, 4).take(2)}")
