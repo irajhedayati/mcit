@@ -1,5 +1,7 @@
 package ca.mcit.bigdata.scala
 
+import ca.mcit.bigdata.scala.Scala22LookUpTables.Geo
+
 import scala.collection.Map
 
 object Scala24Option extends App {

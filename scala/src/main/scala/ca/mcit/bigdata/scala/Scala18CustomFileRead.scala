@@ -1,5 +1,7 @@
 package ca.mcit.bigdata.scala
 
+import ca.mcit.bigdata.scala.schema.Movie
+
 import scala.io.{BufferedSource, Source}
 
 object Scala18CustomFileRead extends App {
