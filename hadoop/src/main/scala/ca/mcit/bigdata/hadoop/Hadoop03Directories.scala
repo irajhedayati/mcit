@@ -2,7 +2,7 @@ package ca.mcit.bigdata.hadoop
 
 import org.apache.hadoop.fs.Path
 
-object Hadoop03Directories extends HadoopClient with App {
+object Hadoop03Directories extends HdfsClientFromFile with App {
 
   /*
   hadoop fs -ls /

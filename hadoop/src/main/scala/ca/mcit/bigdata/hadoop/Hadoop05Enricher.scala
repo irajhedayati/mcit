@@ -1,12 +1,14 @@
 package ca.mcit.bigdata.hadoop
 
 import org.apache.hadoop.fs.Path
-import scala.io.Source
 
-object HadoopEnricher extends HdfsClient {
+import java.io.{BufferedReader, InputStreamReader}
+
+object Hadoop05Enricher extends HdfsClientFromEnvVar {
 
   val routeStream = fs.open(new Path("/user/summer2019/dheeraj/routes.txt"))
-  val routeMap: Map[Int, Route] = Iterator.continually(routeStream.readLine()).takeWhile(_ != null)
+  val routeReader = new BufferedReader(new InputStreamReader(routeStream))
+  val routeMap: Map[Int, Route] = Iterator.continually(routeReader.readLine()).takeWhile(_ != null)
     .toList
     .tail
     .map(_.split(",", -1))
@@ -15,9 +17,10 @@ object HadoopEnricher extends HdfsClient {
   routeStream.close()
 
   val tripsStream = fs.open(new Path("/user/summer2019/dheeraj/trips.txt"))
+  val tripsReader = new BufferedReader(new InputStreamReader(tripsStream))
   val outPath = new Path("/user/summer2019/dheeraj/trips_routes.txt")
   val outputStream = fs.append(outPath)
-  val x: Iterator[String] = Iterator.continually(tripsStream.readLine()).takeWhile(_ != null)
+  val x: Iterator[String] = Iterator.continually(tripsReader.readLine()).takeWhile(_ != null)
   while(x.hasNext) {
     val record: String = x.next()
     val p: Array[String] = record.split(",", -1)

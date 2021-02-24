@@ -3,7 +3,7 @@ package ca.mcit.bigdata.hadoop
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 
-trait HadoopClient {
+trait HdfsClientFromFile {
 
   // 1. Set the configuration
   val conf = new Configuration()

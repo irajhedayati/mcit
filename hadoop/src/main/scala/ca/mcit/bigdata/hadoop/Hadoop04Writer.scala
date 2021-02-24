@@ -2,7 +2,7 @@ package ca.mcit.bigdata.hadoop
 
 import org.apache.hadoop.fs.{FSDataOutputStream, Path}
 
-object Hadoop04Writer extends HadoopClient with App {
+object Hadoop04Writer extends HdfsClientFromFile with App {
 
   /** The path on the HDFS to write data */
   val filePath = new Path("/user/iraj/names.txt")
