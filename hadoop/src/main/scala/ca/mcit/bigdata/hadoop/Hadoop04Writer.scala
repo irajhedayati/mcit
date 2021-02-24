@@ -8,16 +8,18 @@ object Hadoop04Writer extends HadoopClient with App {
   val filePath = new Path("/user/iraj/names.txt")
 
   /** The list of students to write on HDFS */
-  val names = List("Ramandeep", "Jemish", "Vamsi", "Parvatheesam", "Vasu", "Jigar")
+  val tutorialList = List("Hadoop01Init", "Hadoop02CopyFromLocal", "Hadoop03Directories", "Hadoop04Writer")
 
   /** Open a stream from client to the file on HDFS */
-  val y: FSDataOutputStream = fs.create(filePath)
+  val writer: FSDataOutputStream = fs.create(filePath)
 
   /** Write names on HDFS */
-  names.foreach(name => y.writeChars(name))
+  tutorialList
+    .map(tutorial => s"$tutorial\n")
+    .foreach(tutorial => writer.writeChars(tutorial))
 
   /** clean-up */
-  y.flush()
-  y.close()
+  writer.flush()
+  writer.close()
 
 }

@@ -14,7 +14,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry
  * - Once elected, it will keep the leadership for a random number of seconds and exits
  * - Departure of the leader will launch a new election process by ZK automatically
  */
-class Candidate(val name: String) extends LeaderSelectorListener {
+class ZK07LeaderElection(val name: String) extends LeaderSelectorListener {
 
   val retry = new ExponentialBackoffRetry(1000, 10)
   lazy val client: CuratorFramework = CuratorFrameworkFactory.newClient("quickstart.cloudera:2181", retry)
@@ -45,10 +45,10 @@ class Candidate(val name: String) extends LeaderSelectorListener {
   override def stateChanged(client: CuratorFramework, newState: ConnectionState): Unit = println(newState)
 }
 
-object Candidate extends App {
+object ZK07LeaderElection extends App {
   println("Launch 5 instance of candidates at the same time")
   println("This is only for demonstration purpose. Most probably, a candidate is an standalone application")
-  (1 to 5).foreach(id => new Candidate(s"Candidate #$id").start())
+  (1 to 5).foreach(id => new ZK07LeaderElection(s"Candidate #$id").start())
   println("Keep application running; you should kill the application manually")
   while(true) Thread.sleep(1000)
 }
