@@ -1,4 +1,4 @@
-name := "hive-playground"
+name := "hive"
 
 version := "0.1"
 

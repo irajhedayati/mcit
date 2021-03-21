@@ -14,6 +14,16 @@ object Hive03Execute extends App {
   val connection = DriverManager.getConnection(connectionString)
   val stmt = connection.createStatement()
 
+  // if it is `true`, it means query has a ResultSet
+  // SELECT queries have ResultSet
+  // 1. stmt.executeQuery
+  // 2. stmt.execute
+  //    stmt.getResultSet
+  // if it is `false`, it means query doesn't have a ResultSet
+  // INSERT, UPDATE, CREATE, etc.
+  // 1. stmt.executeUpdate
+  // 2. stmt.execute
+
   val hasResultSet = stmt.execute(
     """INSERT OVERWRITE TABLE enriched_rating
       |SELECT m.id, title, rid, stars, ratingdate
