@@ -1,0 +1,9 @@
+@namespace("ca.mcit.bigdata.avro")
+protocol SRTutorial {
+  record Movie {
+    int mId;
+    string title;
+    int year;
+    union { null, string} director = null;
+  }
+}

@@ -1,4 +1,4 @@
-name := "schema-registry-practices"
+name := "schema-registry"
 
 version := "0.1"
 

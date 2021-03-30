@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "Movie",
+  "namespace": "ca.mcit.bigdata.avro",
+  "fields": [
+    { "name": "mId", "type": "int" },
+    { "name": "title", "type": "string" },
+    { "name": "year", "type": "int" },
+    {
+      "name": "director",
+      "type": ["null", "string"],
+      "default": null
+    }
+  ]
+}
