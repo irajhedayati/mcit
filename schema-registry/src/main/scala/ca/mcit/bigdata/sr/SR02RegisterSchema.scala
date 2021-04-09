@@ -3,7 +3,7 @@ package ca.mcit.bigdata.sr
 import io.confluent.kafka.schemaregistry.ParsedSchema
 import io.confluent.kafka.schemaregistry.avro.AvroSchema
 import io.confluent.kafka.schemaregistry.client.CachedSchemaRegistryClient
-import org.apache.avro.{Schema, SchemaBuilder}
+import org.apache.avro.{ Schema, SchemaBuilder }
 
 import java.io.InputStream
 import scala.io.Source
@@ -18,12 +18,22 @@ object SR02RegisterSchema extends App {
 
   // 1.b create schema programmatically
   val movieSchemaProgrammatically: Schema =
-    SchemaBuilder.record("Movie").namespace("ca.mcit.bigdata.avro").fields()
+    SchemaBuilder
+      .record("Movie")
+      .namespace("ca.mcit.bigdata.avro")
+      .fields()
       .requiredInt("mId")
       .requiredString("title")
       .requiredInt("year")
-      .name("director").`type`().unionOf().nullType().and().stringType().endUnion().nullDefault()
-    .endRecord()
+      .name("director")
+      .`type`()
+      .unionOf()
+      .nullType()
+      .and()
+      .stringType()
+      .endUnion()
+      .nullDefault()
+      .endRecord()
 
   // 1.c define the schema in Avro IDL (easier to maintain) and use tools to convert to Avro schema
 
@@ -32,14 +42,14 @@ object SR02RegisterSchema extends App {
 
   // 3. register the schema
   val id = srClient.register("movie", new AvroSchema(movieSchemaFromFile).asInstanceOf[ParsedSchema])
+  srClient.register()
 
   println(s"Registered 'movie' schema with ID $id")
 
   /**
-    * Exercise: register the schema for 'rating'
-    *
-    * case class Rating(rID: Int, mID: Int, stars: Int, ratingDate: Option[String])
-    */
-
+  * Exercise: register the schema for 'rating'
+  *
+  * case class Rating(rID: Int, mID: Int, stars: Int, ratingDate: Option[String])
+  */
 
 }

@@ -5,7 +5,7 @@ import java.util.Properties
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
 import org.apache.kafka.common.serialization.{IntegerSerializer, StringSerializer}
 
-object ProducerPlayground extends App {
+object Kafka01Producer extends App {
 
   val topicName = "test_2"
 
