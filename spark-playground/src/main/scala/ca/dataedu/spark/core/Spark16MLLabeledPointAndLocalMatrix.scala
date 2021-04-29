@@ -3,7 +3,7 @@ package ca.dataedu.spark.core
 import org.apache.spark.mllib.linalg.{Matrices, Vectors}
 import org.apache.spark.mllib.regression.LabeledPoint
 
-object Spark15MLLabeledPointAndLocalMatrix extends App with Base {
+object Spark16MLLabeledPointAndLocalMatrix extends App with Base {
 
   /*
   Labeled points are used for training data with label.

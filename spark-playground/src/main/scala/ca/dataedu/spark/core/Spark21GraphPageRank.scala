@@ -4,7 +4,7 @@ import org.apache.spark.graphx.{Graph, GraphLoader, VertexRDD}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
-object Spark20GraphPageRank extends App with Base {
+object Spark21GraphPageRank extends App with Base {
 
   val sparkConf = new SparkConf().setAppName("Spark Core practice").setMaster("local[*]")
   val sc: SparkContext = new SparkContext(sparkConf)

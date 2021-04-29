@@ -5,7 +5,7 @@ import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
-object Spark11StreamingWithSql extends App with Base {
+object Spark12StreamingWithSql extends App with Base {
 
   /**
     * Problem:

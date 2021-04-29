@@ -3,7 +3,7 @@ package ca.dataedu.spark.core
 import org.apache.spark.mllib.stat.Statistics
 import org.apache.spark.sql.SparkSession
 
-object Spark17MLCorrelation extends App with Base {
+object Spark18MLCorrelation extends App with Base {
 
   /*
   Correlation is a measure that indicates how two variables affect each other

@@ -8,7 +8,7 @@ import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, Loca
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-object Spark12StreamingWithKafka extends App {
+object Spark13StreamingWithKafka extends App {
 
   // 1. Create Spark streaming context
   // 1.a A Spark configuration

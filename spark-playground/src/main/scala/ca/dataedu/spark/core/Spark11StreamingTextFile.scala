@@ -5,7 +5,7 @@ import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-object Spark10StreamingTextFile extends App with Base {
+object Spark11StreamingTextFile extends App with Base {
 
   // 1. Spark conf
   val sparkConf = new SparkConf().setAppName("Spark streaming practices").setMaster("local[*]")

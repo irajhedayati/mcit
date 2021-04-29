@@ -3,7 +3,7 @@ package ca.dataedu.spark.core
 import org.apache.spark.mllib.linalg
 import org.apache.spark.mllib.linalg._
 
-object Spark14MLLocalVector extends App with Base {
+object Spark15MLLocalVector extends App with Base {
 
   /*
     For the local vector and local matrix, we don't need a spark context or spark session.

@@ -6,7 +6,7 @@ import org.apache.spark.mllib.linalg.distributed.{IndexedRow, IndexedRowMatrix, 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
-object Spark16MLDistributedMatrix extends App with Base {
+object Spark17MLDistributedMatrix extends App with Base {
 
   /**
     * Distributed matrix is an RDD of vectors. Hence, we need a spark context

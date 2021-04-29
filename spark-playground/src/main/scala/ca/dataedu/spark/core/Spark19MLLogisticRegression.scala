@@ -5,7 +5,7 @@ import org.apache.spark.ml.linalg.Vectors
 import org.apache.spark.sql.types.{DoubleType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 
-object Spark18MLLogisticRegression extends App with Base {
+object Spark19MLLogisticRegression extends App with Base {
 
   val spark = SparkSession.builder().appName("Spark ML").master("local[*]").getOrCreate()
   /*

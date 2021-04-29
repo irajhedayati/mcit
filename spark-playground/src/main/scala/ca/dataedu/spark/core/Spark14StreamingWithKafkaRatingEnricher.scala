@@ -10,7 +10,7 @@ import org.apache.spark.streaming.dstream.{DStream, InputDStream}
 import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
-object Spark13StreamingWithKafkaRatingEnricher extends App with Base {
+object Spark14StreamingWithKafkaRatingEnricher extends App with Base {
 
   val spark = SparkSession.builder().appName("Spark Streaming w/ Kafka").master("local[*]").getOrCreate()
   val ssc = new StreamingContext(spark.sparkContext, Seconds(10))
